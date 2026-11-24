@@ -6,6 +6,13 @@ public class PlayerInteraction : MonoBehaviour
     //Distancia maxima para interactuar
     public float interactionDistance = 1f;
 
+    private PlayerBattery battery;
+
+    void Start()
+    {
+        battery = GetComponent<PlayerBattery>();
+    }
+
     void Update()
     {
         //Comprobar si se pulsa la tecla E
@@ -33,13 +40,33 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
 
-            //Interactuar con el objeto encontrado
-            if (closestObject != null)
+            if (closestObject != null && battery != null)
             {
+                //Comprobar si es un generador
+                EnergyGenerator generator = closestObject.GetComponent<EnergyGenerator>();
+
+                if (generator != null)
+                {
+                    generator.Interact(battery);
+                    return;
+                }
+
+                //Comprobar si es una maquina
                 MachineSwitch machine = closestObject.GetComponent<MachineSwitch>();
 
                 if (machine != null)
-                    machine.Interact();
+                {
+                    machine.Interact(battery);
+                    return;
+                }
+
+                //Comprobar si es el panel de una puerta
+                EnergyDoor door = closestObject.GetComponent<EnergyDoor>();
+
+                if (door != null)
+                {
+                    door.Interact(battery);
+                }
             }
         }
     }

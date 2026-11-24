@@ -13,11 +13,27 @@ public class MachineSwitch : MonoBehaviour
         UpdateColor();
     }
 
-    //Encender o apagar la maquina
-    public void Interact()
+    //Transferir o recuperar energia de la maquina
+    public void Interact(PlayerBattery battery)
     {
-        isActive = !isActive;
-        UpdateColor();
+        //Si la maquina esta apagada, necesita energia
+        if (!isActive)
+        {
+            if (battery.UseEnergy())
+            {
+                isActive = true;
+                UpdateColor();
+            }
+        }
+        else
+        {
+            //Si esta encendida, el robot puede recuperar la energia
+            if (battery.StoreEnergy())
+            {
+                isActive = false;
+                UpdateColor();
+            }
+        }
     }
 
     //Cambiar el color segun su estado

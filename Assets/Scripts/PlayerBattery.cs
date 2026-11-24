@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerBatery : MonoBehaviour
+public class PlayerBattery : MonoBehaviour
 {
     //Indica si el robot tiene energia almacenada
     [SerializeField] private bool hasEnergy = false;
