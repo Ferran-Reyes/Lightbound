@@ -5,12 +5,20 @@ public class PlayerBattery : MonoBehaviour
     //Indica si el robot tiene energia almacenada
     [SerializeField] private bool hasEnergy = false;
 
+    //Comprobar si tiene energia
+    public bool HasEnergy()
+    {
+        return hasEnergy;
+    }
+
     //Guardar energia en la bateria
     public bool StoreEnergy()
     {
         //Si ya tiene energia no puede guardar mas
         if (hasEnergy)
+        {
             return false;
+        }
 
         hasEnergy = true;
         return true;
@@ -21,7 +29,9 @@ public class PlayerBattery : MonoBehaviour
     {
         //Si no tiene energia no puede utilizarla
         if (!hasEnergy)
+        {
             return false;
+        }
 
         hasEnergy = false;
         return true;
