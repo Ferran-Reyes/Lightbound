@@ -29,7 +29,10 @@ public class PlayerInteraction : MonoBehaviour
                 //Comprobar si el objeto es interactuable
                 if (obj.CompareTag("Interactable"))
                 {
-                    float distance = Vector3.Distance(transform.position, obj.ClosestPoint(transform.position));
+                    float distance = Vector3.Distance(
+                        transform.position,
+                        obj.ClosestPoint(transform.position)
+                    );
 
                     //Guardar el objeto mas cercano
                     if (distance < closestDistance)
@@ -42,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (closestObject != null && battery != null)
             {
-                //Comprobar si es un generador
+                //Generador
                 EnergyGenerator generator = closestObject.GetComponent<EnergyGenerator>();
 
                 if (generator != null)
@@ -51,7 +54,7 @@ public class PlayerInteraction : MonoBehaviour
                     return;
                 }
 
-                //Comprobar si es una maquina
+                //Maquina
                 MachineSwitch machine = closestObject.GetComponent<MachineSwitch>();
 
                 if (machine != null)
@@ -60,12 +63,21 @@ public class PlayerInteraction : MonoBehaviour
                     return;
                 }
 
-                //Comprobar si es el panel de una puerta
+                //Puerta
                 EnergyDoor door = closestObject.GetComponent<EnergyDoor>();
 
                 if (door != null)
                 {
                     door.Interact(battery);
+                    return;
+                }
+
+                //Plataforma movil
+                EnergyPlatform platform = closestObject.GetComponent<EnergyPlatform>();
+
+                if (platform != null)
+                {
+                    platform.Interact(battery);
                 }
             }
         }
